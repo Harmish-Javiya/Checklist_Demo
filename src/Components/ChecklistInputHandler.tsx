@@ -16,9 +16,9 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
   };
 
 
-  // Uncomment the following code to enable voice recognition functionality
+  // Uncomment the following code to enable voice recognition functionality ------------------------------------------
   
-
+  //----------------------PERMISSION---------------------------------
   // useEffect(() => {
   //   if(Platform.OS === 'android') {
   //     PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
@@ -28,6 +28,7 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
   //   };
   // }, []);
 
+  //-----------------------SETTING TEXT------------------------------
   // useEffect(() => {
   //   Voice.onSpeechResults = (event) => {  
   //     const spokenResults = event.value?.[0];
@@ -42,6 +43,7 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
   //   }
   // }, []);
 
+  //----------------------LISTNEING----------------------------------
   // const startLIstening = async () => {
   //   if (isListening) return;
   //   try {
@@ -51,7 +53,7 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
   //     console.error('Error starting voice recognition:', error);
   //   }
   // };
-
+  //--------------------------------------------------------------------------------------------------------------------------
 
   return (
     <View style={styles.wrapper}>
