@@ -101,3 +101,6 @@ Install This Dependices..
  
 - npm i react-native-bouncy-checkbox  
 - npm i @react-native-async-storage/async-storage 
+- npm install @react-navigation/native @react-navigation/native-stack              
+- npm install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated
+- npm i react-native-linear-gradient  
