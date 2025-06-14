@@ -31,14 +31,18 @@ export default function AddScreen({ navigation }: Props) {
   
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#111827" />
+      <StatusBar barStyle="light-content" backgroundColor="#0a0a0a" />
       <LinearGradient
-        colors={['#111827', '#1f2937', '#111827']}
+        colors={['#0a0a0a', '#1a1a1a', '#0a0a0a']}
         style={styles.background}
       />
       
+      {/* Grain overlay */}
+      <View style={styles.grainOverlay} />
+      
       <View style={styles.content}>
         <Text style={styles.title}>Add New Item</Text>
+        <Text style={styles.subtitle}>Choose your productivity tool</Text>
 
         <View style={styles.optionRow}>
           <TouchableOpacity
@@ -49,11 +53,15 @@ export default function AddScreen({ navigation }: Props) {
             onPress={() => setSelectedType('checklist')}
           >
             <LinearGradient
-              colors={selectedType === 'checklist' ? ['#10b981', '#059669'] : ['#374151', '#1f2937']}
+              colors={selectedType === 'checklist' ? ['#00d4aa', '#00c49a', '#00b48a'] : ['#1a1a1a', '#2a2a2a', '#1a1a1a']}
               style={styles.optionGradient}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 1}}
             >
+              <View style={styles.grainOverlaySmall} />
+              <Text style={styles.optionEmoji}>📝</Text>
               <Text style={[styles.optionText, selectedType === 'checklist' && styles.selectedText]}>
-                📝 Checklist
+                Checklist
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -66,30 +74,44 @@ export default function AddScreen({ navigation }: Props) {
             onPress={() => setSelectedType('task')}
           >
             <LinearGradient
-              colors={selectedType === 'task' ? ['#10b981', '#059669'] : ['#374151', '#1f2937']}
+              colors={selectedType === 'task' ? ['#00d4aa', '#00c49a', '#00b48a'] : ['#1a1a1a', '#2a2a2a', '#1a1a1a']}
               style={styles.optionGradient}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 1}}
             >
+              <View style={styles.grainOverlaySmall} />
+              <Text style={styles.optionEmoji}>✅</Text>
               <Text style={[styles.optionText, selectedType === 'task' && styles.selectedText]}>
-                ✅ Task
+                Task
               </Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
 
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter name..."
-            placeholderTextColor="#9ca3af"
-            value={inputText}
-            onChangeText={setInputText}
-          />
+          <LinearGradient
+            colors={['#1a1a1a', '#2a2a2a', '#1a1a1a']}
+            style={styles.inputWrapper}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 1}}
+          >
+            <View style={styles.grainOverlaySmall} />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter name..."
+              placeholderTextColor="#6c757d"
+              value={inputText}
+              onChangeText={setInputText}
+            />
+          </LinearGradient>
         </View>
 
         <TouchableOpacity style={styles.addBtnWrapper} onPress={handleSubmit}>
           <LinearGradient
-            colors={['#3b82f6', '#2563eb']}
+            colors={['#4c6ef5', '#364fc7', '#2f3ab2']}
             style={styles.addBtn}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 1}}
           >
             <Text style={styles.addText}>Add Item</Text>
           </LinearGradient>
@@ -102,94 +124,139 @@ export default function AddScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#111827' 
+    backgroundColor: '#0a0a0a' 
   },
   background: {
     ...StyleSheet.absoluteFillObject,
   },
+  grainOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    opacity: 0.03,
+    shadowColor: '#fff',
+    shadowOpacity: 0.02,
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+  },
+  grainOverlaySmall: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    opacity: 0.03,
+    shadowColor: '#fff',
+    shadowOpacity: 0.02,
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+  },
   content: {
     flex: 1,
-    padding: 24,
+    padding: 32,
     justifyContent: 'center',
+    position: 'relative',
+    zIndex: 1,
   },
   title: { 
-    fontSize: 32, 
-    fontWeight: '700', 
-    marginBottom: 40, 
+    fontSize: 36, 
+    fontWeight: '800', 
+    marginBottom: 8, 
     textAlign: 'center',
-    color: '#f9fafb',
+    color: '#f8f9fa',
     textShadowColor: '#000',
     textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadowRadius: 8,
+    letterSpacing: 0.5,
+  },
+  subtitle: {
+    fontSize: 17,
+    color: '#8e9aaf',
+    textAlign: 'center',
+    marginBottom: 48,
+    fontStyle: 'italic',
+    letterSpacing: 0.3,
   },
   optionRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 32,
-    gap: 16,
+    marginBottom: 40,
+    gap: 20,
   },
   optionButton: {
-    borderRadius: 16,
+    borderRadius: 20,
     overflow: 'hidden',
     flex: 1,
-    maxWidth: 140,
+    maxWidth: 160,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.4,
+    shadowRadius: 16,
+    elevation: 10,
   },
   optionGradient: {
-    paddingVertical: 16,
+    paddingVertical: 24,
     paddingHorizontal: 20,
     alignItems: 'center',
-    borderRadius: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#333333',
+    position: 'relative',
   },
   selected: {
-    shadowColor: '#10b981',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowColor: '#00d4aa',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.6,
+    shadowRadius: 20,
+    elevation: 15,
+  },
+  optionEmoji: {
+    fontSize: 32,
+    marginBottom: 12,
   },
   optionText: {
-    fontSize: 16,
-    color: '#f9fafb',
+    fontSize: 17,
+    color: '#f8f9fa',
     fontWeight: '600',
+    letterSpacing: 0.3,
   },
   selectedText: {
     color: '#ffffff',
+    fontWeight: '700',
   },
   inputContainer: {
-    marginBottom: 32,
+    marginBottom: 40,
+  },
+  inputWrapper: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#333333',
+    overflow: 'hidden',
+    position: 'relative',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#4b5563',
-    borderRadius: 16,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    fontSize: 16,
-    backgroundColor: '#1f2937',
-    color: '#f9fafb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    paddingHorizontal: 24,
+    paddingVertical: 20,
+    fontSize: 17,
+    color: '#f8f9fa',
+    fontWeight: '500',
+    letterSpacing: 0.3,
+    position: 'relative',
+    zIndex: 1,
   },
   addBtnWrapper: {
-    borderRadius: 16,
+    borderRadius: 20,
     overflow: 'hidden',
-    shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowColor: '#4c6ef5',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.6,
+    shadowRadius: 20,
+    elevation: 15,
   },
   addBtn: {
-    padding: 18,
-    borderRadius: 16,
+    padding: 22,
+    borderRadius: 20,
     alignItems: 'center',
   },
   addText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '700',
     letterSpacing: 0.5,
   },

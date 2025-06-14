@@ -98,23 +98,30 @@ function ChecklistApp({ route, navigation }: Props): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#111827" />
+      <StatusBar barStyle="light-content" backgroundColor="#0a0a0a" />
       <LinearGradient
-        colors={['#111827', '#1f2937', '#111827']}
+        colors={['#0a0a0a', '#1a1a1a', '#0a0a0a']}
         style={styles.background}
       />
+      
+      {/* Grain overlay */}
+      <View style={styles.grainOverlay} />
       
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <LinearGradient
-            colors={['#374151', '#1f2937']}
+            colors={['#1a1a1a', '#2a2a2a', '#1a1a1a']}
             style={styles.backButtonGradient}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 1}}
           >
+            <View style={styles.grainOverlaySmall} />
             <Text style={styles.backText}>← Back</Text>
           </LinearGradient>
         </TouchableOpacity>
 
         <Text style={styles.listNameHeader}>{listName}</Text>
+        <Text style={styles.subtitle}>Manage your checklist items</Text>
       </View>
 
       <ChecklistInputHandler onAddItem={handleAddItem} />
@@ -142,45 +149,84 @@ function ChecklistApp({ route, navigation }: Props): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: '#0a0a0a',
   },
   background: {
     ...StyleSheet.absoluteFillObject,
   },
+  grainOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    opacity: 0.03,
+    shadowColor: '#fff',
+    shadowOpacity: 0.02,
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+  },
+  grainOverlaySmall: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    opacity: 0.03,
+    shadowColor: '#fff',
+    shadowOpacity: 0.02,
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+  },
   header: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 16,
+    position: 'relative',
+    zIndex: 1,
   },
   backButton: {
     alignSelf: 'flex-start',
-    borderRadius: 12,
+    borderRadius: 16,
     overflow: 'hidden',
-    marginBottom: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 6,
   },
   backButtonGradient: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#333333',
+    position: 'relative',
   },
   backText: {
-    fontSize: 16,
-    color: '#10b981',
+    fontSize: 17,
+    color: '#00d4aa',
     fontWeight: '600',
+    letterSpacing: 0.3,
+    position: 'relative',
+    zIndex: 1,
   },
   listNameHeader: {
-    fontSize: 28,
-    fontWeight: '700',
+    fontSize: 32,
+    fontWeight: '800',
     textAlign: 'center',
-    color: '#f9fafb',
+    color: '#f8f9fa',
     textShadowColor: '#000',
     textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadowRadius: 8,
     marginBottom: 8,
+    letterSpacing: 0.5,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#8e9aaf',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    letterSpacing: 0.3,
   },
   listContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 24,
   },
 });
 
