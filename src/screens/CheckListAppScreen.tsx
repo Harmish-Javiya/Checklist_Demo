@@ -8,6 +8,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Checklist from '../Components/Checklist';
 import ChecklistInputHandler from '../Components/ChecklistInputHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -95,16 +96,29 @@ function ChecklistApp({ route, navigation }: Props): React.JSX.Element {
     saveItemsToStorage(updated);
   };
 
-
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{ fontSize: 16, color: '#0ea5e9' }}>⬅ Back</Text>
-      </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="#111827" />
+      <LinearGradient
+        colors={['#111827', '#1f2937', '#111827']}
+        style={styles.background}
+      />
+      
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <LinearGradient
+            colors={['#374151', '#1f2937']}
+            style={styles.backButtonGradient}
+          >
+            <Text style={styles.backText}>← Back</Text>
+          </LinearGradient>
+        </TouchableOpacity>
 
-      <Text style={styles.listNameHeader}>{listName}</Text>
+        <Text style={styles.listNameHeader}>{listName}</Text>
+      </View>
+
       <ChecklistInputHandler onAddItem={handleAddItem} />
+      
       <FlatList
         data={items}
         keyExtractor={(_, index) => index.toString()}
@@ -119,6 +133,7 @@ function ChecklistApp({ route, navigation }: Props): React.JSX.Element {
           />
         )}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listContent}
       />
     </SafeAreaView>
   );
@@ -127,15 +142,45 @@ function ChecklistApp({ route, navigation }: Props): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#111827',
+  },
+  background: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  header: {
     paddingHorizontal: 16,
-    backgroundColor: '#F9FAFB',
+    paddingTop: 16,
+    paddingBottom: 8,
+  },
+  backButton: {
+    alignSelf: 'flex-start',
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 16,
+  },
+  backButtonGradient: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 12,
+  },
+  backText: {
+    fontSize: 16,
+    color: '#10b981',
+    fontWeight: '600',
   },
   listNameHeader: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '700',
     textAlign: 'center',
-    paddingTop: 16,
-    color: '#1f2937',
+    color: '#f9fafb',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+    marginBottom: 8,
+  },
+  listContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 20,
   },
 });
 

@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<any, any>;
@@ -29,86 +31,166 @@ export default function AddScreen({ navigation }: Props) {
   
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Add New Item</Text>
+      <StatusBar barStyle="light-content" backgroundColor="#111827" />
+      <LinearGradient
+        colors={['#111827', '#1f2937', '#111827']}
+        style={styles.background}
+      />
+      
+      <View style={styles.content}>
+        <Text style={styles.title}>Add New Item</Text>
 
-      <View style={styles.optionRow}>
-        <TouchableOpacity
-          style={[
-            styles.optionButton,
-            selectedType === 'checklist' && styles.selected,
-          ]}
-          onPress={() => setSelectedType('checklist')}
-        >
-          <Text style={styles.optionText}>Checklist</Text>
-        </TouchableOpacity>
+        <View style={styles.optionRow}>
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selectedType === 'checklist' && styles.selected,
+            ]}
+            onPress={() => setSelectedType('checklist')}
+          >
+            <LinearGradient
+              colors={selectedType === 'checklist' ? ['#10b981', '#059669'] : ['#374151', '#1f2937']}
+              style={styles.optionGradient}
+            >
+              <Text style={[styles.optionText, selectedType === 'checklist' && styles.selectedText]}>
+                📝 Checklist
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[
-            styles.optionButton,
-            selectedType === 'task' && styles.selected,
-          ]}
-          onPress={() => setSelectedType('task')}
-        >
-          <Text style={styles.optionText}>Task</Text>
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selectedType === 'task' && styles.selected,
+            ]}
+            onPress={() => setSelectedType('task')}
+          >
+            <LinearGradient
+              colors={selectedType === 'task' ? ['#10b981', '#059669'] : ['#374151', '#1f2937']}
+              style={styles.optionGradient}
+            >
+              <Text style={[styles.optionText, selectedType === 'task' && styles.selectedText]}>
+                ✅ Task
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter name..."
+            placeholderTextColor="#9ca3af"
+            value={inputText}
+            onChangeText={setInputText}
+          />
+        </View>
+
+        <TouchableOpacity style={styles.addBtnWrapper} onPress={handleSubmit}>
+          <LinearGradient
+            colors={['#3b82f6', '#2563eb']}
+            style={styles.addBtn}
+          >
+            <Text style={styles.addText}>Add Item</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Enter name..."
-        value={inputText}
-        onChangeText={setInputText}
-      />
-
-      <TouchableOpacity style={styles.addBtn} onPress={handleSubmit}>
-        <Text style={styles.addText}>Add</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#F9FAFB' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+  container: { 
+    flex: 1, 
+    backgroundColor: '#111827' 
+  },
+  background: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  content: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+  },
+  title: { 
+    fontSize: 32, 
+    fontWeight: '700', 
+    marginBottom: 40, 
+    textAlign: 'center',
+    color: '#f9fafb',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
   optionRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 16,
-    gap: 10,
+    marginBottom: 32,
+    gap: 16,
   },
   optionButton: {
-    paddingVertical: 10,
+    borderRadius: 16,
+    overflow: 'hidden',
+    flex: 1,
+    maxWidth: 140,
+  },
+  optionGradient: {
+    paddingVertical: 16,
     paddingHorizontal: 20,
-    backgroundColor: '#e5e7eb',
-    borderRadius: 8,
+    alignItems: 'center',
+    borderRadius: 16,
   },
   selected: {
-    backgroundColor: '#10b981',
+    shadowColor: '#10b981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   optionText: {
     fontSize: 16,
-    color: '#111827',
-    fontWeight: '500',
+    color: '#f9fafb',
+    fontWeight: '600',
+  },
+  selectedText: {
+    color: '#ffffff',
+  },
+  inputContainer: {
+    marginBottom: 32,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    borderColor: '#4b5563',
+    borderRadius: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     fontSize: 16,
-    backgroundColor: '#fff',
-    marginBottom: 20,
+    backgroundColor: '#1f2937',
+    color: '#f9fafb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  addBtnWrapper: {
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#3b82f6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   addBtn: {
-    backgroundColor: '#0d99f2',
-    padding: 14,
-    borderRadius: 10,
+    padding: 18,
+    borderRadius: 16,
     alignItems: 'center',
   },
   addText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
 });

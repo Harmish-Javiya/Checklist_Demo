@@ -1,5 +1,6 @@
-import React, { JSX, useState,useEffect } from 'react';
+import React, { JSX, useState, useEffect } from 'react';
 import { Text, StyleSheet, View, Image, TextInput, Pressable, Platform, PermissionsAndroid } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 type Props = {
   onAddItem: (item: string) => void;
@@ -14,7 +15,6 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
     onAddItem(text);
     setText('');
   };
-
 
   // Uncomment the following code to enable voice recognition functionality ------------------------------------------
   
@@ -57,7 +57,12 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.checklistContainer}>
+      <LinearGradient
+        colors={['#374151', '#1f2937']}
+        style={styles.checklistContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+      >
         <TextInput
           style={styles.input}
           keyboardType="default"
@@ -66,18 +71,21 @@ export default function ChecklistInputHandler({ onAddItem }: Props): JSX.Element
           onChangeText={setText}
           value={text}
         />
-        <Pressable onPress={handleSubmit}>
-          <View style={styles.addButton}>
+        <Pressable onPress={handleSubmit} style={styles.addButtonWrapper}>
+          <LinearGradient
+            colors={['#10b981', '#059669']}
+            style={styles.addButton}
+          >
             <Image
               source={require('../assets/plus-symbol-button.png')}
               style={styles.plusIcon}
             />
-          </View>
+          </LinearGradient>
         </Pressable>
         {/* <Pressable onPress={startLIstening} style={styles.micButton}>
         <Text style={styles.mic}>{isListening ? '🎙️' : '🎤'}</Text>
       </Pressable> */}
-      </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -86,37 +94,44 @@ const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
     paddingHorizontal: 12,
-    paddingBottom: 16,
+    paddingBottom: 20,
+    paddingTop: 8,
   },
   checklistContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 8,
+    borderRadius: 20,
+    padding: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#4b5563',
   },
   input: {
     flex: 1,
-    height: 48,
-    backgroundColor: '#F3F4F6',
-    borderRadius: 12,
-    paddingHorizontal: 16,
+    height: 52,
+    backgroundColor: '#1f2937',
+    borderRadius: 16,
+    paddingHorizontal: 18,
     fontSize: 16,
-    color: '#111827',
+    color: '#f9fafb',
+    borderWidth: 1,
+    borderColor: '#4b5563',
+  },
+  addButtonWrapper: {
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginLeft: 12,
   },
   addButton: {
-    width: 48,
-    height: 48,
-    backgroundColor: '#4CAF50',
-    borderRadius: 12,
+    width: 52,
+    height: 52,
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 8,
   },
   plusIcon: {
     width: 24,
